@@ -173,7 +173,11 @@ class FRAME :
         image = img.copy()
         for n, obs in enumerate(self.obstacles):
 
-            success, corwh = obs.tracker.update(image)
+            tracker = cv2.TrackerMIL_create()
+            box = self.obstacles[n]
+            bbox = (box.xmin, box.ymin, box.xmax-box.xmin, box.ymax-box.ymin)
+            success = tracker.init(image, bbox )
+            success, corwh = tracker.update(image)
             if not success :
                 del self.obstacles[n]
 

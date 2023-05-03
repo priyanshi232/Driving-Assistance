@@ -434,8 +434,8 @@ class LANE_DETECTION:
             cv2.circle(img_orig,tuple(orig_points),10, color=GRAY, thickness=4)
             cv2.imwrite(self.temp_dir+"vanishing_point.jpg",img_orig)
             cv2.imwrite(self.temp_dir+"lane_width.jpg",img)
-            cv2.imwrite(self.temp_dir+"perspective_lines.jpg",img2)
-            cv2.imwrite(self.temp_dir+"mask.jpg",mask)
+            cv2.circle(img_orig,(int(self.vanishing_point[0]),int(self.vanishing_point[1])),10, (255,0,0),5)
+            cv2.circle(img_orig,(int(orig_points[0]),int(orig_points[1])),10,color=GRAY, thickness=4 )
             img = cv2.bitwise_and(img, img, mask =  mask )
             cv2.imwrite(self.temp_dir+"masked_regions.jpg",img)
             cv2.imwrite(self.temp_dir+"edges.jpg",edges*roi)
@@ -463,7 +463,7 @@ class LANE_DETECTION:
         p1 = (coord[0], coord[1]+2)
         p2 = (coord[0]+rect_wd, coord[1]-rect_ht)
         cv2.rectangle(overlay, p1, p2,  (0, 0, 0),-1)
-        cv2.putText(overlay, text,   coord,  self.font, self.font_sz*1.25, color, 1, cv2.LINE_AA)
+        cv2.putText(overlay, text,   coord,  self.font, self.font_sz, color, 1, cv2.LINE_AA)
 
         return 
     
